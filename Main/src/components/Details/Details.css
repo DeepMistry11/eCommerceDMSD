@@ -1,0 +1,171 @@
+.details__container {
+  min-height: calc(100vh - 70px);
+  padding: 0 calc(3.5vw + 5px);
+  position: relative;
+}
+
+.details__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  opacity: 0.8;
+}
+
+.details__background img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.details__content {
+  margin: 40px 0px;
+}
+/* Uncomment this if line 33 is commented */
+.image__title {
+  height: 30vh;
+  width: 30vw;
+  min-height: 170px;
+  min-width: 200px;
+  margin-bottom: 30px;
+  /* margin-top: 60px; uncomment this if line 23-26 is commented */
+}
+
+.image__title img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.details__controls {
+  display: flex;
+  align-items: center;
+}
+
+.play__button button {
+  border-radius: 4px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  height: 45px;
+  background: rgb(249, 249, 249);
+  border: none;
+  padding: 0px 24px;
+  margin-right: 22px;
+  letter-spacing: 1.8px;
+  cursor: pointer;
+}
+
+.play__button button img {
+  width: 20px;
+}
+
+.play__button button span {
+  font-weight: bold;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.play__button button:hover {
+  background: rgb(198, 198, 198);
+}
+
+.trailer__button button {
+  border-radius: 4px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  height: 45px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgb(249, 249, 249);
+  padding: 0px 24px;
+  margin-right: 22px;
+  letter-spacing: 1.8px;
+  cursor: pointer;
+  color: white;
+  text-transform: uppercase;
+}
+
+.trailer__button button:hover {
+  background: rgb(198, 198, 198);
+  color: black;
+}
+
+.trailer__button button img {
+  width: 20px;
+}
+
+.trailer__button button span {
+  font-weight: bold;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.add__button button {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid white;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  cursor: pointer;
+  outline: none;
+  margin-right: 16px;
+}
+
+.add__button button span {
+  font-size: 30px;
+}
+
+.group__watch__button button {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid white;
+  background-color: rgba(0, 0, 0);
+  color: white;
+  cursor: pointer;
+  outline: none;
+  margin-right: 16px;
+}
+
+.details__subtitles {
+  display: flex;
+  font-size: 15px;
+  min-height: 20px;
+  margin-top: 26px;
+}
+
+.details__subtitles img {
+  width: 70px;
+  margin-right: 10px;
+}
+
+.details__subtitles div {
+  margin-right: 10px;
+}
+
+.details__description {
+  line-height: 1.4;
+  font-size: 16px !important;
+  margin-top: 16px;
+  color: rgb(249, 249, 249);
+  max-width: 760px;
+  width: 600px;
+}
+
+.no__display {
+  display: none !important;
+}
+
+.no-margin {
+  margin: 0px;
+}

@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+.Main__layout {
+  /* display: flex; */
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #949494;
+  border-radius: 5px;
+}
+
+.App::before {
+  background: url(/src/components/Home/home-background.png) center center / cover no-repeat fixed;
+  position: fixed;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}

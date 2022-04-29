@@ -1,0 +1,37 @@
+.originals__container:before {
+  background: url("./home-background.png") center center / cover no-repeat fixed;
+  /* background-color: #232531; */
+  /* new changes */
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.originals__container {
+  /* width: 100%;
+  padding: 60px calc(3.5vw + 5px) 0; */
+  margin-top: 20px;
+  top: 40px;
+  position: sticky;
+}
+
+.originals__logo {
+  display: flex;
+  justify-content: center;
+}
+
+.originals__logo img {
+  width: 15%;
+  margin-bottom: 50px;
+}
+
+.originals__data {
+  margin-bottom: 40px;
+}
+
+.movies_wrap {
+  margin-bottom: 20px;
+}
