@@ -4,7 +4,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: top;
+    align-items: center !important;
 }
 
 .login__container::before {

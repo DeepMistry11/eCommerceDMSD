@@ -1,7 +1,7 @@
 import React from "react";
 import "./cart.css";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Dropdown from "react-bootstrap/Dropdown";
+// import DropdownButton from "react-bootstrap/DropdownButton";
+// import Dropdown from "react-bootstrap/Dropdown";
 import { QuantityPicker } from "react-qty-picker";
 
 function Cart() {

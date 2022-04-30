@@ -8,28 +8,40 @@ const panes = [
     menuItem: "All Products",
     render: () => (
       <Tab.Pane attached={false}>
-        <Movies className="movies__list" />
+        <Movies type="allProducts" className="movies__list" />
       </Tab.Pane>
     ),
   },
   {
-    menuItem: "TVs",
-    render: () => <Tab.Pane attached={false}></Tab.Pane>,
+    menuItem: "Computers",
+    render: () => (
+      <Tab.Pane attached={false}>
+        <Movies type="computers" className="movies__list" />
+      </Tab.Pane>
+    ),
   },
   {
     menuItem: "Laptops",
-    render: () => <Tab.Pane attached={false}></Tab.Pane>,
+    render: () => (
+      <Tab.Pane attached={false}>
+        <Movies type="laptops" className="movies__list" />
+      </Tab.Pane>
+    ),
   },
   {
     menuItem: "Printer",
-    render: () => <Tab.Pane attached={false}></Tab.Pane>,
+    render: () => (
+      <Tab.Pane attached={false}>
+        <Movies className="movies__list" />
+      </Tab.Pane>
+    ),
   },
 ];
 
 function MovieList() {
   return (
     <div className="movie__list__container">
-      <h2>Products</h2>
+      <h3 style={{ color: "whitesmoke" }}>Products</h3>
       <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
     </div>
   );

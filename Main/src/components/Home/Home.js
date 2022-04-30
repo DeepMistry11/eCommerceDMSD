@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ImageSlider from "../Image Slider/ImageSlider";
-import Movies from "../Movies/Movies";
+// import Movies from "../Movies/Movies";
 import Viewers from "../Viewers/Viewers";
 import { motion } from "framer-motion";
 import db from "../../firebase";

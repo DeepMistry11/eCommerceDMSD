@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { NavLink, Link } from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import {
   selectUserName,
   selectUserPhoto,
-  setUserLogin,
-  setSignOut,
+  // setUserLogin,
+  // setSignOut,
 } from "../../features/User/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { auth, provider } from "../../firebase";
+// import { auth, provider } from "../../firebase";
 import { useHistory } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import "./Header.css";
@@ -123,11 +123,10 @@ function Header2() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu variant="dark">
-                <Dropdown.Item href="/profile" active>
-                  My Profile
-                </Dropdown.Item>
+                <Dropdown.Item href="/profile">My Profile</Dropdown.Item>
+                <Dropdown.Item href="/login">Login</Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item href="#/action-4">Logout</Dropdown.Item>
+                <Dropdown.Item href="/login">Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>

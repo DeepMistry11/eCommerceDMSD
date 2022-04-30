@@ -16,6 +16,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Profile from "./components/Profile/Profile";
 import Cart from "./components/Cart/Cart";
 import Register from "./components/Register/Register";
+import ViewerComputer from "./components/Viewers/ViewerComputer";
+import ViewerAcc from "./components/Viewers/ViewerAcc";
+import ViewerPrinter from "./components/Viewers/ViewerPrinter";
 
 function App() {
   const location = useLocation();
@@ -45,6 +48,15 @@ function App() {
             </Route>
             <Route path="/viewer">
               <ViewerDetails />
+            </Route>
+            <Route path="/allComputers">
+              <ViewerComputer />
+            </Route>
+            <Route path="/allAcc">
+              <ViewerAcc />
+            </Route>
+            <Route path="/allPrinters">
+              <ViewerPrinter />
             </Route>
             <Route path="/movies">
               <MovieList />

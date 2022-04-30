@@ -4,7 +4,20 @@ import { motion } from "framer-motion";
 import Axios from "axios";
 import "./Viewers.css";
 
-function ViewerDetails(props) {
+function ViewerAcc(props) {
+  const [productName, setProductName] = useState([]);
+
+  // const prop = props.type;
+
+  // const URL = "http://localhost:3001/${props.type}"
+
+  useEffect(() => {
+    Axios.get(`http://localhost:3001/${props.type}`).then((response) => {
+      setProductName(response.data);
+      console.log(response.data);
+    });
+  }, []);
+
   const [hovered, setHovered] = useState(false);
 
   function onMouseEnter() {
@@ -72,4 +85,4 @@ function ViewerDetails(props) {
   );
 }
 
-export default ViewerDetails;
+export default ViewerAcc;

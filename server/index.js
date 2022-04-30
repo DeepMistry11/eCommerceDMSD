@@ -18,7 +18,7 @@ const db = mysql.createConnection({
   port: "3306",
   user: "root",
   password: "itsAsecrate11",
-  database: "crud",
+  database: "online_store",
 });
 
 db.connect(function (err) {
@@ -33,7 +33,8 @@ app.post("/register", (req, res) => {
   const password = req.body.password;
 
   db.query(
-    "INSERT INTO users(email, password) VALUES (?,?)",
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "INSERT INTO customer(Email, Password) VALUES (?,?)",
     [email, password],
     (err, result) => {
       console.log(err, "something is wrong");
@@ -46,19 +47,76 @@ app.post("/login", (req, res) => {
   const password = req.body.password;
 
   db.query(
-    "SELECT * FROM users WHERE email = ? AND password = ?",
+    "SELECT * FROM users Where email = ? AND password = ?",
     [email, password],
     (err, result) => {
       if (err) {
-        res.send({ err: err });
+        console.log(err);
       }
-
       if (result.length > 0) {
+        console.log(result, "this is what i got");
         res.send(result);
-      } else ({ message: "Wrong username/password comination!" });
+      }
+      // else {
+      //   res.send({ message: "wrong combination" });
+      //   console.log(result);
+      // }
+      // console.log(err);
     }
   );
 });
+
+app.get("/allProducts", (req, res) => {
+  const sqlSelect = "SELECT * FROM product";
+  db.query(sqlSelect, (err, result) => {
+    console.log(result);
+    // return result;
+    res.send(result);
+  });
+});
+app.get("/computers", (req, res) => {
+  const sqlSelect = "SELECT * FROM product WHERE PType = 'Computer'";
+  db.query(sqlSelect, (err, result) => {
+    console.log(result);
+    // return result;
+    res.send(result);
+  });
+});
+app.get("/laptops", (req, res) => {
+  const sqlSelect = "SELECT * FROM product WHERE PType = 'Laptop'";
+  db.query(sqlSelect, (err, result) => {
+    console.log(result);
+    // return result;
+    res.send(result);
+  });
+});
+app.get("/accessories", (req, res) => {
+  const sqlSelect = "SELECT * FROM product";
+  db.query(sqlSelect, (err, result) => {
+    console.log(result);
+    // return result;
+    res.send(result);
+  });
+});
+
+// app.post("/login", (req, res) => {
+//   const email = req.body.email;
+//   const password = req.body.password;
+
+//   db.query(
+//     "SELECT * FROM users WHERE email = ? AND password = ?",
+//     [email, password],
+//     (err, result) => {
+//       if (err) {
+//         res.send({ err: err });
+//       }
+
+//       if (result.length > 0) {
+//         res.send(result);
+//       } else ({ message: "Wrong username/password comination!" });
+//     }
+//   );
+// });
 
 app.get("/api/viewAll", (req, res) => {
   const sqlInsert = "SELECT * FROM computer";
