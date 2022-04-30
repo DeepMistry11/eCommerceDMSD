@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import "./Login.css";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [email, setUserNameLog] = useState("");
@@ -33,7 +34,10 @@ function Login() {
           >
             <div className="onboarding-wrapper">
               <form id="dssLogin" name="dssLogin">
-                <h3 className="padding--bottom-6 text-color--primary">
+                <h3
+                  className="padding--bottom-6 text-color--primary"
+                  style={{ marginBottom: "20px" }}
+                >
                   Log in with your email
                 </h3>
                 <fieldset className="sc-dVhcbM eiZupP">
@@ -71,7 +75,13 @@ function Login() {
                     CONTINUE
                   </button>
                 </div>
-                <h4>{loginState}</h4>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <h6 style={{ marginTop: "10px", marginRight: "5px" }}>
+                    Need an account?
+                  </h6>{" "}
+                  <Link to="/register">Register</Link>
+                </div>
+                {/* <h4>{loginState}</h4> */}
                 {/* <div style={{ marginTop: "24px" }}>
                   <p
                     className="text-button text-color--secondary padding--right-1"

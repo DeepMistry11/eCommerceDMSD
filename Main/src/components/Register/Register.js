@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import "./register.css";
+import { Link } from "react-router-dom";
 
 function Register() {
   const [userEmail, setUserEmail] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userLname, setUserLname] = useState("");
+  const [userAdd, setUserAdd] = useState("");
+  const [userPhone, setUserPhone] = useState("");
   const [userPass, setUserPass] = useState("");
 
   const registerUser = () => {
     Axios.post("http://localhost:3001/register", {
+      fname: userName,
+      lname: userLname,
+      address: userAdd,
+      phone: userPhone,
       email: userEmail,
       password: userPass,
     }).then((response) => {
@@ -38,9 +47,62 @@ function Register() {
           <main class="onboarding" id="onboarding_index" style={{ top: "0px" }}>
             <div class="onboarding-wrapper">
               <form id="dssLogin" name="dssLogin">
-                <h3 class="padding--bottom-6 text-color--primary">Register</h3>
+                <h3
+                  class="padding--bottom-6 text-color--primary"
+                  style={{ marginBottom: "20px" }}
+                >
+                  Register
+                </h3>
+                <fieldset
+                  class="sc-dVhcbM eiZupP"
+                  style={{ width: "48%", marginRight: "4%" }}
+                >
+                  <legend class="sc-fAjcbJ eIfxFy">First Name</legend>
+                  <span style={{ position: "relative", display: "block" }}>
+                    <input
+                      class="sc-jAaTju fmqfIm sc-eqIVtm csbJFj text-color--primary body-copy form-input-text"
+                      placeholder="First Name"
+                      type="text"
+                      onChange={(e) => {
+                        setUserName(e.target.value);
+                      }}
+                    ></input>
+                    <div class="metadata text-color--secondary padding--top-2 padding--left-1"></div>
+                  </span>
+                </fieldset>
+                <fieldset class="sc-dVhcbM eiZupP" style={{ width: "48%" }}>
+                  <legend class="sc-fAjcbJ eIfxFy">Last Name</legend>
+                  <span style={{ position: "relative", display: "block" }}>
+                    <input
+                      class="sc-jAaTju fmqfIm sc-eqIVtm csbJFj text-color--primary body-copy form-input-text"
+                      placeholder="Last Name"
+                      type="text"
+                      onChange={(e) => {
+                        setUserLname(e.target.value);
+                      }}
+                    ></input>
+                    <div class="metadata text-color--secondary padding--top-2 padding--left-1"></div>
+                  </span>
+                </fieldset>
                 <fieldset class="sc-dVhcbM eiZupP">
-                  <legend class="sc-fAjcbJ eIfxFy">email</legend>
+                  <legend class="sc-fAjcbJ eIfxFy">Address</legend>
+                  <span style={{ position: "relative", display: "block" }}>
+                    <input
+                      class="sc-jAaTju fmqfIm sc-eqIVtm csbJFj text-color--primary body-copy form-input-text"
+                      placeholder="Address"
+                      type="text"
+                      onChange={(e) => {
+                        setUserAdd(e.target.value);
+                      }}
+                    ></input>
+                    <div class="metadata text-color--secondary padding--top-2 padding--left-1"></div>
+                  </span>
+                </fieldset>
+                <fieldset
+                  class="sc-dVhcbM eiZupP"
+                  style={{ width: "48%", marginRight: "4%" }}
+                >
+                  <legend class="sc-fAjcbJ eIfxFy">Email</legend>
                   <span style={{ position: "relative", display: "block" }}>
                     <input
                       class="sc-jAaTju fmqfIm sc-eqIVtm csbJFj text-color--primary body-copy form-input-text"
@@ -48,6 +110,20 @@ function Register() {
                       type="text"
                       onChange={(e) => {
                         setUserEmail(e.target.value);
+                      }}
+                    ></input>
+                    <div class="metadata text-color--secondary padding--top-2 padding--left-1"></div>
+                  </span>
+                </fieldset>
+                <fieldset class="sc-dVhcbM eiZupP" style={{ width: "48%" }}>
+                  <legend class="sc-fAjcbJ eIfxFy">Phone</legend>
+                  <span style={{ position: "relative", display: "block" }}>
+                    <input
+                      class="sc-jAaTju fmqfIm sc-eqIVtm csbJFj text-color--primary body-copy form-input-text"
+                      placeholder="Phone"
+                      type="text"
+                      onChange={(e) => {
+                        setUserPhone(e.target.value);
                       }}
                     ></input>
                     <div class="metadata text-color--secondary padding--top-2 padding--left-1"></div>
@@ -73,8 +149,14 @@ function Register() {
                     class="sc-cvbbAY lbiuih button button--primary login__submit__btn"
                     onClick={registerUser}
                   >
-                    CONTINUE
+                    Signup
                   </button>
+                </div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <h6 style={{ marginTop: "10px", marginRight: "5px" }}>
+                    Already a customer?
+                  </h6>{" "}
+                  <Link to="/login">Login</Link>
                 </div>
                 {/* <div style={{ marginTop: "24px" }}>
                   <p
