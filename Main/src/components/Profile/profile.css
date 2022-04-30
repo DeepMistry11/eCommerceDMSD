@@ -1,0 +1,86 @@
+.account__setting {
+    display: block;
+    flex-grow: 1;
+    flex-shrink: 0;
+    min-height: calc(100vh - 250px);
+    overflow-x: inherit;
+    padding: 0 calc(3.5vw + 24px);
+    position: relative;
+}
+
+@media (min-width: 480px) {
+    .account__div {
+        margin: 92px auto;
+        max-width: 506px;
+        min-height: calc(100vh - 460px);
+        position: relative;
+    }
+
+}
+
+.text-color--primary {
+    color: #f9f9f9;
+}
+
+.prof__section {
+    border-radius: 4px;
+    border: 1px solid rgb(49, 52, 62);
+    display: flex;
+    flex-flow: column nowrap;
+    margin-bottom: 32px;
+}
+
+.prof__head {
+    background-color: #31343e;
+    padding-bottom: 0.25rem;
+    padding-top: 0.25rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.text-color--section-header {
+    color: #a8a9ad;
+}
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.margin--0 {
+    margin: 0;
+}
+
+.body-copy {
+    font-family: Avenir-Roman, sans-serif;
+    font-size: 15px;
+    line-height: 1.53;
+}
+
+.cxDKXM {
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    min-height: 56px;
+    padding: 16px;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.jDcTkg> :not(:first-child) {
+    border-top: 1px solid rgb(49, 52, 62);
+}
+
+.prof__logout__in {
+    justify-content: center;
+}
+
+.prof__logout__in p {
+    color: #5497CD !important;
+}
+
+.edit__icon {
+    color: white;
+}

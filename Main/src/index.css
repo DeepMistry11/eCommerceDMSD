@@ -1,0 +1,20 @@
+body {
+  color: white;
+  background-color: #040714;
+  margin: 0;
+  font-family: "AvenirLTStd-Roman";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-Roman";
+  src: local("AvenirLTStd-Roman"),
+    url("./Fonts/avenir_ff/AvenirLTStd-Roman.otf") format("truetype");
+  font-weight: bold;
+}

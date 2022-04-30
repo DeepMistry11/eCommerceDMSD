@@ -1,0 +1,39 @@
+.home__container {
+  min-height: calc(100vh - 70px);
+  /* padding: 0 calc(3.5vw + 5px) 0 0;  */
+  /* padding: 0 calc(3.5vw + 5px); */
+  /* old changes */
+  position: relative;
+  overflow-x: hidden;
+  width: 70%;
+}
+
+.home__container::before {}
+
+.main__home__container {
+  /* padding: 0 calc(3.5vw + 5px) 0; */
+}
+
+.home__main__div {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.home__main__div::before {
+  background: url("./home-background.png") center center / cover no-repeat fixed;
+  /* old changes */
+  /* background-color: #232531; */
+  position: fixed;
+  /* new changes */
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.home__sidebar {
+  width: 25%;
+}

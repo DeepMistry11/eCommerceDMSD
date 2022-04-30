@@ -1,0 +1,110 @@
+.movie__list__container:before {
+  background: url("./home-background.png") center center / cover no-repeat fixed;
+  /* background-color: #232531; */ /* new changes */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.movie__list__container h2 {
+  font-size: 3em !important;
+  font-weight: 500;
+}
+
+.movie__list__container {
+  padding: 30px calc(3.5vw + 5px) 0;
+}
+
+.ui.menu {
+  display: flex;
+  margin: 1rem 0;
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+  background: transparent;
+  font-weight: 400;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  box-shadow: none !important;
+  border-radius: 0rem !important;
+  min-height: 2.85714286em;
+}
+
+.ui.secondary.pointing.menu .active.item {
+  background-color: transparent;
+  box-shadow: none;
+  border-color: #fff;
+  font-weight: 700;
+  color: #fff;
+}
+.ui.secondary.pointing.menu .item {
+  border-bottom-color: #75757e;
+  border-bottom-style: solid;
+  border-radius: 0;
+  align-self: flex-end;
+  margin: 0 0 -2px;
+  padding: 0.85714286em 1.14285714em;
+  border-bottom-width: 2px;
+  transition: color 0.1s ease;
+}
+.ui.secondary.menu .active.item {
+  box-shadow: none;
+  background: rgba(0, 0, 0, 0.05);
+  color: #fff;
+  border-radius: 0.28571429rem;
+}
+.ui.secondary.menu .item {
+  align-self: center;
+  box-shadow: none;
+  border: none;
+  padding: 0.78571429em 0.92857143em;
+  margin: 0 0.35714286em;
+  background: 0 0;
+  transition: color 0.1s ease;
+  border-radius: 0rem !important;
+  color: #75757e;
+}
+.ui.menu .active.item {
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.95);
+  font-weight: 400;
+  box-shadow: none;
+}
+.ui.menu > .item:first-child {
+  border-radius: 0.28571429rem 0 0 0.28571429rem;
+}
+.ui.menu:not(.vertical) .item {
+  display: flex;
+  align-items: center;
+}
+.ui.menu .item {
+  position: relative;
+  vertical-align: middle;
+  line-height: 1;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  flex: 0 0 auto;
+  -webkit-user-select: none;
+  user-select: none;
+  background: 0 0;
+  padding: 0.92857143em 1.14285714em;
+  text-transform: none;
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: 400;
+  transition: background 0.1s ease, box-shadow 0.1s ease, color 0.1s ease;
+}
+.ui.menu:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.ui.segment {
+  position: relative;
+}
+
+.movies__content {
+  padding: 0px !important;
+}

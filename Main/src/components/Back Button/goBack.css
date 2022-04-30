@@ -1,0 +1,19 @@
+.back__button button {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid white;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  cursor: pointer;
+  outline: none;
+  margin-right: 16px;
+}
+
+.back__button button span {
+  font-size: 25px;
+  font-weight: normal;
+}
