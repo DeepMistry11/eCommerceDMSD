@@ -29,13 +29,17 @@ db.connect(function (err) {
 });
 
 app.post("/register", (req, res) => {
+  const fname = req.body.fname;
+  const lname = req.body.lname;
   const email = req.body.email;
+  const address = req.body.address;
+  const phone = req.body.phone;
   const password = req.body.password;
 
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO customer(Email, Password) VALUES (?,?)",
-    [email, password],
+    "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (10,?,?,?,?,?,?)",
+    [fname, lname, email, address, phone, password],
     (err, result) => {
       console.log(err, "something is wrong");
     }

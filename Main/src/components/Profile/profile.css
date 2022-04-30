@@ -64,7 +64,7 @@
     display: flex;
     flex-flow: row nowrap;
     min-height: 56px;
-    padding: 16px;
+    /* padding: 16px; */
     cursor: pointer;
     justify-content: space-between;
 }
