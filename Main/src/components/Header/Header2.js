@@ -61,7 +61,7 @@ function Header2() {
   return (
     <div className="header__start">
       <div className="header__sidebar">
-        <div className="header__sidebar__logo">
+        <div className="header__sidebar__logo" style={{ marginLeft: "2%" }}>
           {/* <NavLink to="" className="header__sidebar__logo"> */}
           <img alt="xyz" src="/images/logo.svg" />
           {/* </NavLink> */}
