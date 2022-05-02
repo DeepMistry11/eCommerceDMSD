@@ -38,7 +38,7 @@ app.post("/register", (req, res) => {
 
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (21,?,?,?,?,?,?)",
+    "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (22,?,?,?,?,?,?)",
     [fname, lname, email, address, phone, password],
     (err, result) => {
       console.log(err, "something is wrong");
@@ -47,15 +47,17 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
+  console.log("logged in");
   const email = req.body.email;
   const password = req.body.password;
 
   db.query(
-    "SELECT * FROM users Where email = ? AND password = ?",
+    "SELECT * FROM customer Where email = ? AND password = ?",
     [email, password],
     (err, result) => {
       if (err) {
         console.log(err);
+        res.send(err.message);
       }
       if (result.length > 0) {
         console.log(result, "this is what i got");
