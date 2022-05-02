@@ -119,7 +119,44 @@ app.get("/api/viewAll", (req, res) => {
     console.log(result);
   });
 });
+app.post("/api/addToCart", (req, res) => {
+  console.log('in add to cart api')
+  const BID = req.body.BID;
+  const PID = req.body.PID;
+  const Quantity = req.body.Quantity;
+  const PriceSold = req.body.PriceSold;
+  console.log('req.body in add to cart')
+  console.log(req.body)
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "INSERT INTO appears_in(BID,PID,Quantity,PriceSold) VALUES ('10','5','1','150')",
+    [BID, PID, Quantity, PriceSold],
+    (err, result) => {
+      console.log(err, "something is wrong");
+    }
+  );
+  res.send("Product added to cart");
+});
 
+// app.post("/api/displayCart", (req, res) => {
+//   console.log('in displayCart')
+//   const CID = req.body.CID;
+  
+//   console.log('req.body in add to cart')
+//   console.log(req.body)
+//   const sqlQuery = "SELECT PName, PType, description, Quantity, PriceSold FROM cart NATURAL JOIN product WHERE cart.PID=product.PID AND cart.CID=?";
+//   db.query(
+//    sqlQuery,
+ 
+//     [CID],
+//     (err, result) => {
+//       console.log(err, "something is wrong");
+//       res.send("Cart Details",result);
+//     }
+    
+//   );
+ 
+// });
 app.listen(3001, () => {
   console.log("running on port 3001");
 });
@@ -130,4 +167,6 @@ app.get("/profile", (req, res) => {
     // return result;
     res.send(result);
   });
+
+  
 });
