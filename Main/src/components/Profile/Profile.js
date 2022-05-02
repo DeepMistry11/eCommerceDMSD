@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
 import "./profile.css";
 
 function Profile() {
+  const [customer, setCustomer] = useState([]);
+  useEffect(() => {
+    Axios.get("http://localhost:3001/profile").then((response) => {
+      setCustomer(response.data);
+      console.log(response.data);
+    });
+  }, []);
   return (
     <div className="account__setting">
       <div className="account__div">
@@ -16,7 +24,7 @@ function Profile() {
             <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                  deepmistry753@gmail.com
+                  {customer[9].Email}
                 </p>
               </div>
               <svg
@@ -35,7 +43,7 @@ function Profile() {
             <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                  ***************
+                  {customer[9].Password}
                 </p>
               </div>
               <svg
@@ -54,7 +62,7 @@ function Profile() {
             <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                  4 Kingsland Ave, Harrison, NJ, 07029
+                  {customer[9].Address}
                 </p>
               </div>
               <svg

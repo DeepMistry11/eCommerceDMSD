@@ -50,7 +50,10 @@ function Home() {
                   </p>
                 </div>
                 <div className="prof__mail">
-                  <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
+                  <div
+                    class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell"
+                    style={{ padding: "0px" }}
+                  >
                     <img
                       src="https://cdn.mos.cms.futurecdn.net/3tQfZWCFCLVbkQ5ZyaPaTc.jpg"
                       alt="logo"
@@ -83,7 +86,10 @@ function Home() {
                   </p>
                 </div>
                 <div className="prof__mail">
-                  <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
+                  <div
+                    class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell"
+                    style={{ padding: "0px" }}
+                  >
                     <img
                       src="https://cdn.mos.cms.futurecdn.net/3tQfZWCFCLVbkQ5ZyaPaTc.jpg"
                       alt="logo"
@@ -116,7 +122,10 @@ function Home() {
                   </p>
                 </div>
                 <div className="prof__mail">
-                  <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
+                  <div
+                    class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell"
+                    style={{ padding: "0px" }}
+                  >
                     <img
                       src="https://cdn.mos.cms.futurecdn.net/3tQfZWCFCLVbkQ5ZyaPaTc.jpg"
                       alt="logo"
@@ -149,7 +158,10 @@ function Home() {
                   </p>
                 </div>
                 <div className="prof__mail">
-                  <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
+                  <div
+                    class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell"
+                    style={{ padding: "0px" }}
+                  >
                     <img
                       src="https://cdn.mos.cms.futurecdn.net/3tQfZWCFCLVbkQ5ZyaPaTc.jpg"
                       alt="logo"

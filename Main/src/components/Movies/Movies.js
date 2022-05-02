@@ -4,9 +4,20 @@ import React, { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
 import "./Movies.css";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 function Movies(props) {
   const [productName, setProductName] = useState([]);
+
+  const initial = <i class="bi bi-cart3"></i>;
+  const clicked = <i class="bi bi-check-lg"></i>;
+
+  const [addProduct, setAddProduct] = useState(false);
+  const handleChangeActive = () => {
+    setAddProduct((previousProduct) => {
+      return !previousProduct;
+    });
+  };
 
   // const prop = props.type;
 
@@ -28,10 +39,42 @@ function Movies(props) {
         <div className="movies__content">
           {productName.map((val, index) => {
             return (
-              <div className="movies__wrap">
-                <h4 key={index}>{val.PName}</h4>
-                {/* <img src="https://m.media-amazon.com/images/M/MV5BYWRhZjUyZTktZjcyMi00MjRhLWI0ZjQtNjkxYjlmYjg4N2M0XkEyXkFqcGdeQXZ3ZXNsZXk@._V1_QL75_UX500_CR0,0,500,281_.jpg" /> */}
-              </div>
+              <>
+                <div>
+                  <div
+                    className="movies__wrap"
+                    style={{ marginBottom: "10px" }}
+                  >
+                    <img src="https://m.media-amazon.com/images/M/MV5BYWRhZjUyZTktZjcyMi00MjRhLWI0ZjQtNjkxYjlmYjg4N2M0XkEyXkFqcGdeQXZ3ZXNsZXk@._V1_QL75_UX500_CR0,0,500,281_.jpg" />
+                  </div>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <h6 style={{ color: "whitesmoke" }} key={index}>
+                      {val.PName}
+                    </h6>
+                    <Link
+                      // onClick={setProductName}
+                      // to="/cart"
+                      className="cart__btn"
+                    >
+                      {addProduct ? (
+                        <i
+                          class="bi bi-check-lg"
+                          onClick={() => handleChangeActive()}
+                        ></i>
+                      ) : (
+                        <i
+                          class="bi bi-cart3"
+                          onClick={() => handleChangeActive()}
+                        ></i>
+                      )}
+                      {/* <i class="bi bi-cart3"></i>
+                      <i class="bi bi-check-lg"></i> */}
+                    </Link>
+                  </div>
+                </div>
+              </>
             );
           })}
         </div>

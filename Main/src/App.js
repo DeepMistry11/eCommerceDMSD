@@ -11,7 +11,7 @@ import MovieList from "./components/Movie List/MovieList";
 import Originals from "./components/Originals/Originals";
 import Series from "./components/Series/Series";
 import { useHistory } from "react-router-dom";
-
+import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Profile from "./components/Profile/Profile";
 import Cart from "./components/Cart/Cart";
@@ -19,6 +19,7 @@ import Register from "./components/Register/Register";
 import ViewerComputer from "./components/Viewers/ViewerComputer";
 import ViewerAcc from "./components/Viewers/ViewerAcc";
 import ViewerPrinter from "./components/Viewers/ViewerPrinter";
+import Stats from "./components/Stats/Stats";
 
 function App() {
   const location = useLocation();
@@ -31,6 +32,9 @@ function App() {
         {/* <button onClick={() => history.goBack()}>Go Back</button> */}
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.pathname}>
+            <Route path="/stats">
+              <Stats />
+            </Route>
             <Route path="/login">
               <Login />
             </Route>
