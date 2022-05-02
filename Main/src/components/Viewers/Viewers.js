@@ -21,7 +21,7 @@ function Viewers() {
           />
         </div>
       </Link>
-      <Link to="allAcc">
+      <Link to="/allAcc">
         <div className="viewers__wrap starwars__hover">
           <img
             src="https://asia.canon/media/image/2020/08/20/1d9293898956405399672948583c3085_ProH_SS1-w-paper_EN_edited_small-570x400.png"

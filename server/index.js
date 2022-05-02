@@ -29,13 +29,17 @@ db.connect(function (err) {
 });
 
 app.post("/register", (req, res) => {
+  const fname = req.body.fname;
+  const lname = req.body.lname;
   const email = req.body.email;
+  const address = req.body.address;
+  const phone = req.body.phone;
   const password = req.body.password;
 
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO customer(Email, Password) VALUES (?,?)",
-    [email, password],
+    "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (22,?,?,?,?,?,?)",
+    [fname, lname, email, address, phone, password],
     (err, result) => {
       console.log(err, "something is wrong");
     }
@@ -43,15 +47,17 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
+  console.log("logged in");
   const email = req.body.email;
   const password = req.body.password;
 
   db.query(
-    "SELECT * FROM users Where email = ? AND password = ?",
+    "SELECT * FROM customer Where email = ? AND password = ?",
     [email, password],
     (err, result) => {
       if (err) {
         console.log(err);
+        res.send(err.message);
       }
       if (result.length > 0) {
         console.log(result, "this is what i got");
@@ -99,25 +105,6 @@ app.get("/accessories", (req, res) => {
   });
 });
 
-// app.post("/login", (req, res) => {
-//   const email = req.body.email;
-//   const password = req.body.password;
-
-//   db.query(
-//     "SELECT * FROM users WHERE email = ? AND password = ?",
-//     [email, password],
-//     (err, result) => {
-//       if (err) {
-//         res.send({ err: err });
-//       }
-
-//       if (result.length > 0) {
-//         res.send(result);
-//       } else ({ message: "Wrong username/password comination!" });
-//     }
-//   );
-// });
-
 app.get("/api/viewAll", (req, res) => {
   const sqlInsert = "SELECT * FROM computer";
   // "INSERT INTO computer(name, type, price) VALUES('DELL', 'Inspiron','20000' )";
@@ -129,4 +116,12 @@ app.get("/api/viewAll", (req, res) => {
 
 app.listen(3001, () => {
   console.log("running on port 3001");
+});
+
+app.get("/profile", (req, res) => {
+  db.query("SELECT * FROM customer", (err, result) => {
+    console.log(result);
+    // return result;
+    res.send(result);
+  });
 });

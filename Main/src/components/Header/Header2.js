@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   selectUserName,
@@ -17,6 +17,19 @@ function Header2() {
   const history = useHistory();
   const userName = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
+
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (!loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser.FNAME);
+      console.log(foundUser.Fname);
+      // setUser(foundUser);
+      history.push("/login");
+    }
+  }, [localStorage]);
 
   // useEffect(() => {
   //   auth.onAuthStateChanged(async (user) => {
@@ -61,10 +74,10 @@ function Header2() {
   return (
     <div className="header__start">
       <div className="header__sidebar">
-        <div className="header__sidebar__logo">
-          {/* <NavLink to="" className="header__sidebar__logo"> */}
-          <img alt="xyz" src="/images/logo.svg" />
-          {/* </NavLink> */}
+        <div className="header__sidebar__logo" style={{ marginLeft: "2%" }}>
+          <NavLink to="/home" className="header__sidebar__logo">
+            <img alt="xyz" src="/images/logo.svg" />
+          </NavLink>
         </div>
         {/* {!userName ? (
           <div className="login__button" onClick={signIn}>
@@ -115,7 +128,7 @@ function Header2() {
                 className="dropdown__menu"
               >
                 <div className="profile__name header__sidebar__link">
-                  <p>Name</p>
+                  <p>{user}</p>
                 </div>
                 <div>
                   <img alt="profile" src="/images/hardy.jpg" />
@@ -124,9 +137,16 @@ function Header2() {
 
               <Dropdown.Menu variant="dark">
                 <Dropdown.Item href="/profile">My Profile</Dropdown.Item>
-                <Dropdown.Item href="/login">Login</Dropdown.Item>
+                {/* <Dropdown.Item href="/login">Login</Dropdown.Item> */}
                 <Dropdown.Divider />
-                <Dropdown.Item href="/login">Logout</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    localStorage.clear();
+                    history.push("/login");
+                  }}
+                >
+                  Logout
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>
