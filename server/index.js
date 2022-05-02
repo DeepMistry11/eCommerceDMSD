@@ -11,13 +11,20 @@ app.use(
   })
 );
 
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(express.json());
 
 const db = mysql.createConnection({
+  // host: "localhost",
+  // port: "3306",
+  // user: "root",
+  // password: "itsAsecrate11",
+  // database: "online_store",
   host: "localhost",
-  port: "3306",
   user: "root",
-  password: "itsAsecrate11",
+  password: "password",
   database: "online_store",
 });
 
@@ -35,10 +42,11 @@ app.post("/register", (req, res) => {
   const address = req.body.address;
   const phone = req.body.phone;
   const password = req.body.password;
-
+console.log('req.body')
+console.log(req.body)
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (10,?,?,?,?,?,?)",
+    "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (12,'Miti','Shah','miti8797@gmail.com','abc','123456789','Mitishah@97')",
     [fname, lname, email, address, phone, password],
     (err, result) => {
       console.log(err, "something is wrong");
