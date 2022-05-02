@@ -9,9 +9,11 @@ import { setMovies } from "../../features/Movie/movieSlice";
 import Originals from "../Originals/Originals";
 import "./Home.css";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function Home() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // useEffect(() => {
   //   db.collection("movies").onSnapshot((snapshot) => {
@@ -23,7 +25,15 @@ function Home() {
   //     dispatch(setMovies(tempMovies));
   //   });
   // });
-
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (!loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      console.log(foundUser);
+      // setUser(foundUser);
+      history.push("/login");
+    }
+  }, [localStorage]);
   return (
     <div className="home__main__div">
       <div className="home__sidebar">

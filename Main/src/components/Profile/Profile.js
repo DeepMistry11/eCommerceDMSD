@@ -24,7 +24,7 @@ function Profile() {
             <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                  {customer[9].Email}
+                  {/* {customer[2].Email} */}
                 </p>
               </div>
               <svg
@@ -43,7 +43,7 @@ function Profile() {
             <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                  {customer[9].Password}
+                  {/* {customer[2].Password} */}
                 </p>
               </div>
               <svg
@@ -62,7 +62,7 @@ function Profile() {
             <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                  {customer[9].Address}
+                  {/* {customer[2].Address} */}
                 </p>
               </div>
               <svg
