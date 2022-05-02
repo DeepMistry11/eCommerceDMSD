@@ -131,7 +131,7 @@ app.post("/api/addToCart", (req, res) => {
   console.log(req.body)
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO appears_in(BID,PID,Quantity,PriceSold) VALUES ('10','5','1','150')",
+    "INSERT INTO appears_in(BID,PID,Quantity,PriceSold) VALUES ('?','?','?','?')",
     [BID, PID, Quantity, PriceSold],
     (err, result) => {
       console.log(err, "something is wrong");
