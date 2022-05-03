@@ -31,6 +31,11 @@ function Header2() {
     }
   }, [localStorage]);
 
+  const userData = JSON.parse(localStorage.getItem("user"));
+  console.log(
+    "userdata................................................",
+    userData
+  );
   // useEffect(() => {
   //   auth.onAuthStateChanged(async (user) => {
   //     if (user) {
@@ -128,7 +133,7 @@ function Header2() {
                 className="dropdown__menu"
               >
                 <div className="profile__name header__sidebar__link">
-                  <p>{user}</p>
+                  <p>{userData.Email}</p>
                 </div>
                 <div>
                   <img alt="profile" src="/images/hardy.jpg" />

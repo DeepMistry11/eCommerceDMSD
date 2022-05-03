@@ -127,8 +127,8 @@ app.get("/api/viewAll", (req, res) => {
 
 app.post("/api/addToCart", (req, res) => {
   console.log("in add to cart api",req);
-  const CID = req.body.CID;
   const BID = req.body.BID;
+  const CID = req.body.CID;
   const PID = req.body.PID;
   const Quantity = req.body.Quantity;
   const PriceSold = req.body.PriceSold;
@@ -136,7 +136,7 @@ app.post("/api/addToCart", (req, res) => {
   console.log(req.body);
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO userDetailAfterLogin(CID) VALUES ('?')",
+    "INSERT INTO userDetailAfterLogin(CID) VALUES (?)",
     [CID],
     (err, result) => {
       console.log(err, "something is wrong in userDetailAfterLogin ");
@@ -144,7 +144,7 @@ app.post("/api/addToCart", (req, res) => {
   );
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO basket(CID,BID) VALUES ('?','?')",
+    "INSERT INTO basket(CID,BID) VALUES (?,?)",
     [CID, BID],
     (err, result) => {
       console.log(err, "something is wrong basket");
@@ -152,7 +152,7 @@ app.post("/api/addToCart", (req, res) => {
   );
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO appears_in(BID,PID,Quantity,PriceSold) VALUES ('?','?','?','?')",
+    "INSERT INTO appears_in(BID,PID,Quantity,PriceSold) VALUES (?,?,?,?)",
     [BID, PID, Quantity, PriceSold],
     (err, result) => {
       console.log(err, "something is wrong appears_in");
@@ -161,33 +161,45 @@ app.post("/api/addToCart", (req, res) => {
   res.send("Product added to cart");
 });
 
+app.get("/api/displayCart", (req, res) => {
+  console.log("in displayCart");
 
+  const sqlQuery =
+    "SELECT PName, PType, description, Quantity, PriceSold FROM cart NATURAL JOIN product NATURAL JOIN userDetailAfterLogin WHERE cart.PID=product.PID AND cart.CID=userDetailAfterLogin.CID;";
+  db.query(
+    sqlQuery,
+
+    (err, result) => {
+      console.log(err, "something is wrong");
+      res.send(result);
+    }
+  );
+});
+
+///////////////////////////////     ONLINE SALES           /////////////////////////////////////////////
 
 app.post("/api/sales", (req, res) => {
- console.log('api/sales');
-  //const TTAG = req.body.TTAG;
-  db.query(
-    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= '2022-01-01' AND DATE(TDATE)<= '2023-01-01' AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES",
-    // [TDATE,TDATE,TTAG],
-    ['2022-01-01','2023-01-01','Delivered'],
-    (err, result) => {
-      console.log(err, "something is wrong in 1st ");
-    }
-  );
-  db.query(
-    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "SELECT PID,PName,SOLD_TIMES FROM product NATURAL JOIN TEMP_TABLE1 WHERE PID=PRODUCT_SOLD_PID ORDER BY SOLD_TIMES DESC",
-   
-    (err, result) => {
-      console.log(err, "something is wrong in 2nd ",result);
-      res.send(result)
-    }
-  );
-
-  // const op = sqlSelect  sql2;
-  
-});
+  console.log('api/sales');
+   //const TTAG = req.body.TTAG;
+   db.query(
+     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+     "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= '2022-01-01' AND DATE(TDATE)<= '2023-01-01' AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES",
+     // [TDATE,TDATE,TTAG],
+     ['2022-01-01','2023-01-01','Delivered'],
+     (err, result) => {
+       console.log(err, "something is wrong in 1st ");
+     }
+   );
+   db.query(
+     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+     "SELECT PID,PName,SOLD_TIMES FROM product NATURAL JOIN TEMP_TABLE1 WHERE PID=PRODUCT_SOLD_PID ORDER BY SOLD_TIMES DESC",
+    
+     (err, result) => {
+       console.log(err, "something is wrong in 2nd ",result);
+       res.send(result)
+     }
+   )
+    })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
