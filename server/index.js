@@ -11,21 +11,24 @@ app.use(
   })
 );
 
-app.use(express.urlencoded({
-  extended: true
-}));
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 app.use(express.json());
 
 const db = mysql.createConnection({
-  // host: "localhost",
-  // port: "3306",
-  // user: "root",
-  // password: "itsAsecrate11",
-  // database: "online_store",
+  multipleStatements: true,
   host: "localhost",
+  port: "3306",
   user: "root",
-  password: "password",
+  password: "itsAsecrate11",
   database: "online_store",
+  // host: "localhost",
+  // user: "root",
+  // password: "password",
+  // database: "online_store",
 });
 
 db.connect(function (err) {
@@ -42,8 +45,8 @@ app.post("/register", (req, res) => {
   const address = req.body.address;
   const phone = req.body.phone;
   const password = req.body.password;
-console.log('req.body')
-console.log(req.body)
+  console.log("req.body");
+  console.log(req.body);
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
     "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (22,?,?,?,?,?,?)",
@@ -121,6 +124,7 @@ app.get("/api/viewAll", (req, res) => {
     console.log(result);
   });
 });
+
 app.post("/api/addToCart", (req, res) => {
   console.log('in add to cart api')
   const CID =req.body.CID;
@@ -128,8 +132,8 @@ app.post("/api/addToCart", (req, res) => {
   const PID = req.body.PID;
   const Quantity = req.body.Quantity;
   const PriceSold = req.body.PriceSold;
-  console.log('req.body in add to cart')
-  console.log(req.body)
+  console.log("req.body in add to cart");
+  console.log(req.body);
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
     "INSERT INTO userDetailAfterLogin(CID) VALUES ('?')",
@@ -160,22 +164,43 @@ app.post("/api/addToCart", (req, res) => {
 // app.post("/api/displayCart", (req, res) => {
 //   console.log('in displayCart')
 //   const CID = req.body.CID;
-  
+
 //   console.log('req.body in add to cart')
 //   console.log(req.body)
 //   const sqlQuery = "SELECT PName, PType, description, Quantity, PriceSold FROM cart NATURAL JOIN product WHERE cart.PID=product.PID AND cart.CID=?";
 //   db.query(
 //    sqlQuery,
- 
+
 //     [CID],
 //     (err, result) => {
 //       console.log(err, "something is wrong");
 //       res.send("Cart Details",result);
 //     }
-    
+
 //   );
- 
+
 // });
+
+///////////////////////////////     ONLINE SALES           /////////////////////////////////////////////
+
+app.get("/sales", (req, res) => {
+  const sqlSelect =
+    "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= '2022-01-01' AND DATE(TDATE)<= '2022-01-01' AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES; ";
+  // ["2022-01-01", "2023-01-01"],
+  // const sql2 =
+  JOIN(
+    "SELECT PID,PName,SOLD_TIMES FROM product NATURAL JOIN TEMP_TABLE1 WHERE PID=PRODUCT_SOLD_PID ORDER BY SOLD_TIMES DESC;"
+  );
+  // const op = sqlSelect  sql2;
+  db.query(sqlSelect, (err, result) => {
+    console.log(result);
+    // return result;
+    res.send(result);
+  });
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 app.listen(3001, () => {
   console.log("running on port 3001");
 });
@@ -186,6 +211,4 @@ app.get("/profile", (req, res) => {
     // return result;
     res.send(result);
   });
-
-  
 });

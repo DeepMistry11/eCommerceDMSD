@@ -8,6 +8,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import "./Fonts/avenir_ff/AvenirLTStd-Roman.otf";
 import "@coreui/coreui/dist/css/coreui.min.css";
+import "rsuite/styles/index.less";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css";
 
 // import "semantic-ui-css/semantic.min.css";
 
