@@ -19,16 +19,16 @@ app.use(
 app.use(express.json());
 
 const db = mysql.createConnection({
-  multipleStatements: true,
-  host: "localhost",
-  port: "3306",
-  user: "root",
-  password: "itsAsecrate11",
-  database: "online_store",
+  // multipleStatements: true,
   // host: "localhost",
+  // port: "3306",
   // user: "root",
-  // password: "password",
+  // password: "itsAsecrate11",
   // database: "online_store",
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "online_store",
 });
 
 db.connect(function (err) {
@@ -39,6 +39,7 @@ db.connect(function (err) {
 });
 
 app.post("/register", (req, res) => {
+  
   const fname = req.body.fname;
   const lname = req.body.lname;
   const email = req.body.email;
@@ -49,7 +50,7 @@ app.post("/register", (req, res) => {
   console.log(req.body);
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (22,?,?,?,?,?,?)",
+    "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (NULL,?,?,?,?,?,?)",
     [fname, lname, email, address, phone, password],
     (err, result) => {
       console.log(err, "something is wrong");
@@ -127,8 +128,8 @@ app.get("/api/viewAll", (req, res) => {
 
 app.post("/api/addToCart", (req, res) => {
   console.log('in add to cart api')
-  const CID =req.body.CID;
   const BID = req.body.BID;
+  const CID = req.body.CID;
   const PID = req.body.PID;
   const Quantity = req.body.Quantity;
   const PriceSold = req.body.PriceSold;
@@ -136,7 +137,7 @@ app.post("/api/addToCart", (req, res) => {
   console.log(req.body);
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO userDetailAfterLogin(CID) VALUES ('?')",
+    "INSERT INTO userDetailAfterLogin(CID) VALUES (?)",
     [CID],
     (err, result) => {
       console.log(err, "something is wrong in userDetailAfterLogin ");
@@ -144,7 +145,7 @@ app.post("/api/addToCart", (req, res) => {
   );
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO basket(CID,BID) VALUES ('?','?')",
+    "INSERT INTO basket(CID,BID) VALUES (?,?)",
     [CID, BID],
     (err, result) => {
       console.log(err, "something is wrong basket");
@@ -152,7 +153,7 @@ app.post("/api/addToCart", (req, res) => {
   );
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO appears_in(BID,PID,Quantity,PriceSold) VALUES ('?','?','?','?')",
+    "INSERT INTO appears_in(BID,PID,Quantity,PriceSold) VALUES (?,?,?,?)",
     [BID, PID, Quantity, PriceSold],
     (err, result) => {
       console.log(err, "something is wrong appears_in");
@@ -161,44 +162,197 @@ app.post("/api/addToCart", (req, res) => {
   res.send("Product added to cart");
 });
 
-// app.post("/api/displayCart", (req, res) => {
-//   console.log('in displayCart')
-//   const CID = req.body.CID;
+app.get("/api/displayCart", (req, res) => {
+  console.log("in displayCart");
 
-//   console.log('req.body in add to cart')
-//   console.log(req.body)
-//   const sqlQuery = "SELECT PName, PType, description, Quantity, PriceSold FROM cart NATURAL JOIN product WHERE cart.PID=product.PID AND cart.CID=?";
-//   db.query(
-//    sqlQuery,
+  const sqlQuery =
+    "SELECT PName, PType, description, Quantity, PriceSold FROM cart NATURAL JOIN product NATURAL JOIN userDetailAfterLogin WHERE cart.PID=product.PID AND cart.CID=userDetailAfterLogin.CID;";
+  db.query(
+    sqlQuery,
 
-//     [CID],
-//     (err, result) => {
-//       console.log(err, "something is wrong");
-//       res.send("Cart Details",result);
-//     }
-
-//   );
-
-// });
+    (err, result) => {
+      console.log(err, "something is wrong");
+      res.send(result);
+    }
+  );
+});
 
 ///////////////////////////////     ONLINE SALES           /////////////////////////////////////////////
 
-app.get("/sales", (req, res) => {
-  const sqlSelect =
-    "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= '2022-01-01' AND DATE(TDATE)<= '2022-01-01' AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES; ";
-  // ["2022-01-01", "2023-01-01"],
-  // const sql2 =
-  JOIN(
-    "SELECT PID,PName,SOLD_TIMES FROM product NATURAL JOIN TEMP_TABLE1 WHERE PID=PRODUCT_SOLD_PID ORDER BY SOLD_TIMES DESC;"
-  );
-  // const op = sqlSelect  sql2;
-  db.query(sqlSelect, (err, result) => {
-    console.log(result);
-    // return result;
-    res.send(result);
-  });
-});
+app.post("/api/sales", (req, res) => {
+  console.log('api/sales');
+   //const TTAG = req.body.TTAG;
+   db.query(
+     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+     "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= '2022-01-01' AND DATE(TDATE)<= '2023-01-01' AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES",
+     // [TDATE,TDATE,TTAG],
+     ['2022-01-01','2023-01-01','Delivered'],
+     (err, result) => {
+       console.log(err, "something is wrong in 1st ");
+     }
+   );
+   db.query(
+     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+     "SELECT PID,PName,SOLD_TIMES FROM product NATURAL JOIN TEMP_TABLE1 WHERE PID=PRODUCT_SOLD_PID ORDER BY SOLD_TIMES DESC",
+    
+     (err, result) => {
+       console.log(err, "something is wrong in 2nd ",result);
+       res.send(result)
+     }
+   )
+    })
 
+    app.post("/api/sales2", (req, res) => {
+      console.log('api/sales2');
+       //const TTAG = req.body.TTAG;
+       db.query(
+        // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+        "CREATE TABLE TEMP_TABLE2 AS SELECT PID, COUNT(PID) AS count FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' GROUP BY PID",
+        // [TDATE,TDATE,TTAG],
+        ['2022-01-01','2023-01-01','Delivered'],
+        (err, result) => {
+          console.log(err, "something is wrong in 1st ");
+        }
+      );
+       db.query(
+         // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+         "CREATE TABLE TEMP_TABLE3 AS SELECT CID,PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered'",
+         // [TDATE,TDATE,TTAG],
+         ['2022-01-01','2023-01-01','Delivered'],
+         (err, result) => {
+           console.log(err, "something is wrong in 1st ");
+         }
+       );
+       db.query(
+         // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+         "SELECT  DISTINCT PID,count FROM TEMP_TABLE2 NATURAL JOIN TEMP_TABLE3 WHERE TEMP_TABLE2.PID = TEMP_TABLE3.PID group by PID order by count DESC",
+        
+         (err, result) => {
+           console.log(err, "something is wrong in 3nd ",result);
+           res.send(result)
+         }
+       )
+        })
+    
+
+app.post("/api/sales3", (req, res) => {
+          console.log('api/sales3');
+           //const TTAG = req.body.TTAG;
+           db.query(
+             // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+             "CREATE TABLE TEMP_TABLE4 AS SELECT CID, SUM(PriceSold) AS TotalAmount FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' GROUP BY CID ORDER BY TotalAmount DESC LIMIT 10",
+             // [TDATE,TDATE,TTAG],
+             ['2022-01-01','2023-01-01','Delivered'],
+             (err, result) => {
+               console.log(err, "something is wrong in 1st ");
+             }
+           );
+           db.query(
+             // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+             "SELECT FName,LName, TotalAmount FROM TEMP_TABLE4 NATURAL JOIN customer WHERE TEMP_TABLE4.CID=customer.CID",
+            
+             (err, result) => {
+               console.log(err, "something is wrong in 2nd ",result);
+               res.send(result)
+             }
+           )
+            })
+
+
+app.post("/api/sales4", (req, res) => {
+              console.log('api/sales3');
+               //const TTAG = req.body.TTAG;
+               db.query(
+                 // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                 "CREATE TABLE TEMP_TABLE5 AS SELECT CCNumber, SUM(PriceSold) AS TotalAmount FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' GROUP BY CCNumber ORDER BY TotalAmount DESC",
+                 // [TDATE,TDATE,TTAG],
+                 ['2022-01-01','2023-01-01','Delivered'],
+                 (err, result) => {
+                   console.log(err, "something is wrong in 1st ");
+                 }
+               );
+               db.query(
+                 // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                 "SELECT * FROM TEMP_TABLE5",
+                
+                 (err, result) => {
+                   console.log(err, "something is wrong in 2nd ",result);
+                   res.send(result)
+                 }
+               )
+                })
+
+
+
+app.post("/api/salesForComputer", (req, res) => {
+                  console.log('api/sales3');
+                   //const TTAG = req.body.TTAG;
+                   db.query(
+                     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                     "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' ORDER BY PriceSold DESC",
+                     // [TDATE,TDATE,TTAG],
+                     ['2022-01-01','2023-01-01','Delivered'],
+                     (err, result) => {
+                       console.log(err, "something is wrong in 1st ");
+                     }
+                   );
+                   db.query(
+                     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                     "SELECT AVG(PriceSold) AS AVG_COMPUTER_PRICE FROM TEMP_TABLE6 NATURAL JOIN computer WHERE TEMP_TABLE6.PID=computer.PID",
+                    
+                     (err, result) => {
+                       console.log(err, "something is wrong in 2nd ",result);
+                       res.send(result)
+                     }
+                   )
+                    })
+
+
+app.post("/api/salesForLaptop", (req, res) => {
+                      console.log('api/sales3');
+                       //const TTAG = req.body.TTAG;
+                       db.query(
+                         // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                         "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' ORDER BY PriceSold DESC",
+                         // [TDATE,TDATE,TTAG],
+                         ['2022-01-01','2023-01-01','Delivered'],
+                         (err, result) => {
+                           console.log(err, "something is wrong in 1st ");
+                         }
+                       );
+                       db.query(
+                         // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                         "SELECT AVG(PriceSold) AS AVG_LAPTOP_PRICE FROM TEMP_TABLE6 NATURAL JOIN laptop WHERE TEMP_TABLE6.PID=laptop.PID",
+                        
+                         (err, result) => {
+                           console.log(err, "something is wrong in 2nd ",result);
+                           res.send(result)
+                         }
+                       )
+                        })
+
+                        app.post("/api/salesForPrinter", (req, res) => {
+                          console.log('api/sales3');
+                           //const TTAG = req.body.TTAG;
+                           db.query(
+                             // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                             "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' ORDER BY PriceSold DESC",
+                             // [TDATE,TDATE,TTAG],
+                             ['2022-01-01','2023-01-01','Delivered'],
+                             (err, result) => {
+                               console.log(err, "something is wrong in 1st ");
+                             }
+                           );
+                           db.query(
+                             // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                             "SELECT AVG(PriceSold) AS AVG_PRINTER_PRICE FROM TEMP_TABLE6 NATURAL JOIN printer WHERE TEMP_TABLE6.PID=printer.PID",
+                            
+                             (err, result) => {
+                               console.log(err, "something is wrong in 2nd ",result);
+                               res.send(result)
+                             }
+                           )
+                            })
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.listen(3001, () => {
