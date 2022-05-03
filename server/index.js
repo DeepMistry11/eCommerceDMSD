@@ -324,6 +324,222 @@ app.post("/orders", (req, res) => {
     }
   );
 });
+app.post("/api/sales", (req, res) => {
+  console.log("api/sales");
+  //const TTAG = req.body.TTAG;
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "DROP TABLE TEMP_TABLE1",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= ? AND DATE(TDATE)<= ? AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES",
+    [req.body.startDate, req.body.endDate, "Delivered"],
+
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "SELECT PID,PName,SOLD_TIMES FROM product NATURAL JOIN TEMP_TABLE1 WHERE PID=PRODUCT_SOLD_PID ORDER BY SOLD_TIMES DESC",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 2nd ", result);
+      res.send(result);
+    }
+  );
+});
+
+app.post("/api/sales2", (req, res) => {
+  console.log("api/sales2");
+  //const TTAG = req.body.TTAG;
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "CREATE TABLE TEMP_TABLE2 AS SELECT PID, COUNT(PID) AS count FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' GROUP BY PID",
+    // [TDATE,TDATE,TTAG],
+    ["2022-01-01", "2023-01-01", "Delivered"],
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "CREATE TABLE TEMP_TABLE3 AS SELECT CID,PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered'",
+    // [TDATE,TDATE,TTAG],
+    ["2022-01-01", "2023-01-01", "Delivered"],
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "SELECT  DISTINCT PID,count FROM TEMP_TABLE2 NATURAL JOIN TEMP_TABLE3 WHERE TEMP_TABLE2.PID = TEMP_TABLE3.PID group by PID order by count DESC",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 3nd ", result);
+      res.send(result);
+    }
+  );
+});
+
+app.post("/api/sales3", (req, res) => {
+  console.log("api/sales3");
+  //const TTAG = req.body.TTAG;
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "DROP TABLE TEMP_TABLE4",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "CREATE TABLE TEMP_TABLE4 AS SELECT CID, SUM(PriceSold) AS TotalAmount FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= ? AND DATE(TDATE)<= ? AND TTag='Delivered' GROUP BY CID ORDER BY TotalAmount DESC LIMIT 10",
+    // [TDATE,TDATE,TTAG],
+    [req.body.startDate, req.body.endDate, "Delivered"],
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "SELECT FName,LName, TotalAmount FROM TEMP_TABLE4 NATURAL JOIN customer WHERE TEMP_TABLE4.CID=customer.CID",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 2nd ", result);
+      res.send(result);
+    }
+  );
+});
+
+app.post("/api/sales4", (req, res) => {
+  console.log("api/sales3");
+  //const TTAG = req.body.TTAG;
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "DROP TABLE TEMP_TABLE5",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "CREATE TABLE TEMP_TABLE5 AS SELECT CCNumber, SUM(PriceSold) AS TotalAmount FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>=? AND DATE(TDATE)<=? AND TTag='Delivered' GROUP BY CCNumber ORDER BY TotalAmount DESC",
+    // [TDATE,TDATE,TTAG],
+    [req.body.startDate, req.body.endDate, "Delivered"],
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "SELECT * FROM TEMP_TABLE5",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 2nd ", result);
+      res.send(result);
+    }
+  );
+});
+
+app.post("/api/salesForComputer", (req, res) => {
+  console.log("api/sales3");
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "DROP TABLE TEMP_TABLE6",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  //const TTAG = req.body.TTAG;
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>=? AND DATE(TDATE)<=? AND TTag='Delivered' ORDER BY PriceSold DESC",
+    // [TDATE,TDATE,TTAG],
+    [req.body.startDate, req.body.endDate, "Delivered"],
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "SELECT AVG(PriceSold) AS AVG_COMPUTER_PRICE FROM TEMP_TABLE6 NATURAL JOIN computer WHERE TEMP_TABLE6.PID=computer.PID",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 2nd ", result);
+      res.send(result);
+    }
+  );
+});
+
+app.post("/api/salesForLaptop", (req, res) => {
+  console.log("api/sales3");
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "DROP TABLE TEMP_TABLE6",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>=? AND DATE(TDATE)<=? AND TTag='Delivered' ORDER BY PriceSold DESC",
+    // [TDATE,TDATE,TTAG],
+    [req.body.startDate, req.body.endDate, "Delivered"],
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "SELECT AVG(PriceSold) AS AVG_LAPTOP_PRICE FROM TEMP_TABLE6 NATURAL JOIN laptop WHERE TEMP_TABLE6.PID=laptop.PID",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 2nd ", result);
+      res.send(result);
+    }
+  );
+});
+
+app.post("/api/salesForPrinter", (req, res) => {
+  console.log("api/sales3");
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "DROP TABLE TEMP_TABLE6",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>=? AND DATE(TDATE)<=? AND TTag='Delivered' ORDER BY PriceSold DESC",
+    // [TDATE,TDATE,TTAG],
+    [req.body.startDate, req.body.endDate, "Delivered"],
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "SELECT AVG(PriceSold) AS AVG_PRINTER_PRICE FROM TEMP_TABLE6 NATURAL JOIN printer WHERE TEMP_TABLE6.PID=printer.PID",
+
+    (err, result) => {
+      console.log(err, "something is wrong in 2nd ", result);
+      res.send(result);
+    }
+  );
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.listen(3001, () => {
   console.log("running on port 3001");

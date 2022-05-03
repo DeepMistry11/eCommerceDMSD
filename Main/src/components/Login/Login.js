@@ -29,7 +29,7 @@ function Login() {
         setLoginState(response.data.message);
       } else {
         setLoginState(response.data[0].email);
-        history.push("/home");
+        history.push("/movies");
       }
     });
   };
