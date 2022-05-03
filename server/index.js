@@ -183,10 +183,19 @@ app.post("/api/sales", (req, res) => {
   console.log('api/sales');
    //const TTAG = req.body.TTAG;
    db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "DROP TABLE TEMP_TABLE1",
+    
+   
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
+  );
+   db.query(
      // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-     "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= '2022-01-01' AND DATE(TDATE)<= '2023-01-01' AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES",
-     // [TDATE,TDATE,TTAG],
-     ['2022-01-01','2023-01-01','Delivered'],
+     "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= ? AND DATE(TDATE)<= ? AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES",
+      [req.body.startDate,req.body.endDate,'Delivered'],
+    
      (err, result) => {
        console.log(err, "something is wrong in 1st ");
      }
@@ -239,10 +248,19 @@ app.post("/api/sales3", (req, res) => {
           console.log('api/sales3');
            //const TTAG = req.body.TTAG;
            db.query(
+            // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+            "DROP TABLE TEMP_TABLE4",
+            
+           
+            (err, result) => {
+              console.log(err, "something is wrong in 1st ");
+            }
+          );
+           db.query(
              // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-             "CREATE TABLE TEMP_TABLE4 AS SELECT CID, SUM(PriceSold) AS TotalAmount FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' GROUP BY CID ORDER BY TotalAmount DESC LIMIT 10",
+             "CREATE TABLE TEMP_TABLE4 AS SELECT CID, SUM(PriceSold) AS TotalAmount FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= ? AND DATE(TDATE)<= ? AND TTag='Delivered' GROUP BY CID ORDER BY TotalAmount DESC LIMIT 10",
              // [TDATE,TDATE,TTAG],
-             ['2022-01-01','2023-01-01','Delivered'],
+             [req.body.startDate,req.body.endDate,'Delivered'],
              (err, result) => {
                console.log(err, "something is wrong in 1st ");
              }
@@ -263,10 +281,19 @@ app.post("/api/sales4", (req, res) => {
               console.log('api/sales3');
                //const TTAG = req.body.TTAG;
                db.query(
+                // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                "DROP TABLE TEMP_TABLE5",
+                
+               
+                (err, result) => {
+                  console.log(err, "something is wrong in 1st ");
+                }
+              );
+               db.query(
                  // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-                 "CREATE TABLE TEMP_TABLE5 AS SELECT CCNumber, SUM(PriceSold) AS TotalAmount FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' GROUP BY CCNumber ORDER BY TotalAmount DESC",
+                 "CREATE TABLE TEMP_TABLE5 AS SELECT CCNumber, SUM(PriceSold) AS TotalAmount FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>=? AND DATE(TDATE)<=? AND TTag='Delivered' GROUP BY CCNumber ORDER BY TotalAmount DESC",
                  // [TDATE,TDATE,TTAG],
-                 ['2022-01-01','2023-01-01','Delivered'],
+                 [req.body.startDate,req.body.endDate,'Delivered'],
                  (err, result) => {
                    console.log(err, "something is wrong in 1st ");
                  }
@@ -286,12 +313,21 @@ app.post("/api/sales4", (req, res) => {
 
 app.post("/api/salesForComputer", (req, res) => {
                   console.log('api/sales3');
+                  db.query(
+                    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                    "DROP TABLE TEMP_TABLE6",
+                    
+                   
+                    (err, result) => {
+                      console.log(err, "something is wrong in 1st ");
+                    }
+                  );
                    //const TTAG = req.body.TTAG;
                    db.query(
                      // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-                     "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' ORDER BY PriceSold DESC",
+                     "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>=? AND DATE(TDATE)<=? AND TTag='Delivered' ORDER BY PriceSold DESC",
                      // [TDATE,TDATE,TTAG],
-                     ['2022-01-01','2023-01-01','Delivered'],
+                     [req.body.startDate,req.body.endDate,'Delivered'],
                      (err, result) => {
                        console.log(err, "something is wrong in 1st ");
                      }
@@ -310,12 +346,20 @@ app.post("/api/salesForComputer", (req, res) => {
 
 app.post("/api/salesForLaptop", (req, res) => {
                       console.log('api/sales3');
-                       //const TTAG = req.body.TTAG;
+                      db.query(
+                        // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                        "DROP TABLE TEMP_TABLE6",
+                        
+                       
+                        (err, result) => {
+                          console.log(err, "something is wrong in 1st ");
+                        }
+                      );
                        db.query(
                          // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-                         "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' ORDER BY PriceSold DESC",
+                         "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>=? AND DATE(TDATE)<=? AND TTag='Delivered' ORDER BY PriceSold DESC",
                          // [TDATE,TDATE,TTAG],
-                         ['2022-01-01','2023-01-01','Delivered'],
+                         [req.body.startDate,req.body.endDate,'Delivered'],
                          (err, result) => {
                            console.log(err, "something is wrong in 1st ");
                          }
@@ -333,12 +377,20 @@ app.post("/api/salesForLaptop", (req, res) => {
 
                         app.post("/api/salesForPrinter", (req, res) => {
                           console.log('api/sales3');
-                           //const TTAG = req.body.TTAG;
+                          db.query(
+                            // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+                            "DROP TABLE TEMP_TABLE6",
+                            
+                           
+                            (err, result) => {
+                              console.log(err, "something is wrong in 1st ");
+                            }
+                          );
                            db.query(
                              // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-                             "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>='2022-01-01' AND DATE(TDATE)<='2023-01-01' AND TTag='Delivered' ORDER BY PriceSold DESC",
+                             "CREATE TABLE TEMP_TABLE6 AS SELECT PID, PriceSold FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>=? AND DATE(TDATE)<=? AND TTag='Delivered' ORDER BY PriceSold DESC",
                              // [TDATE,TDATE,TTAG],
-                             ['2022-01-01','2023-01-01','Delivered'],
+                             [req.body.startDate,req.body.endDate,'Delivered'],
                              (err, result) => {
                                console.log(err, "something is wrong in 1st ");
                              }

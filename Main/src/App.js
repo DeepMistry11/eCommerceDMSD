@@ -20,11 +20,15 @@ import ViewerComputer from "./components/Viewers/ViewerComputer";
 import ViewerAcc from "./components/Viewers/ViewerAcc";
 import ViewerPrinter from "./components/Viewers/ViewerPrinter";
 import Stats from "./components/Stats/Stats";
-
+import FrequentlySoldProducts from "./components/Stats/FrequentlySoldProducts";
+import BestCustomers from "./components/Stats/BestCustomers";
+import MaxBasketTotal from "./components/Stats/MaxBasketTotal";
+import AverageSellingProduct from "./components/Stats/averageSellingProduct";
 function App() {
   const location = useLocation();
   const history = useHistory();
-
+var userData = localStorage.getItem('user')
+console.log('userdata.......',userData)
   return (
     <div className="App">
       <div className="Main__layout">
@@ -32,9 +36,7 @@ function App() {
         {/* <button onClick={() => history.goBack()}>Go Back</button> */}
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.pathname}>
-            <Route path="/stats">
-              <Stats />
-            </Route>
+           
             <Route path="/login">
               <Login />
             </Route>
@@ -71,6 +73,21 @@ function App() {
             <Route path="/originals">
               <Originals />
             </Route>
+            <Route path="/stats">
+              <Stats />
+            </Route>
+            <Route path ="/frequentlySoldProducts">
+              <FrequentlySoldProducts />
+              </Route>
+              <Route path ="/bestCustomers">
+              <BestCustomers />
+              </Route>
+              <Route path ="/maxBasketTotal">
+              <MaxBasketTotal />
+              </Route>
+              <Route path ="/averageSellingProduct">
+              <AverageSellingProduct />
+              </Route>
             <Route path="/">
               <Home />
             </Route>
