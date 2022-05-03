@@ -1,27 +1,15 @@
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
-// import { selectMovies } from "../../features/Movie/movieSlice";
-// import { useSelector } from "react-redux";
 import "./Movies.css";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function Movies(props) {
+  const history = useHistory();
+  const userData = JSON.parse(localStorage.getItem("user"));
   const [productName, setProductName] = useState([]);
-
-  const initial = <i class="bi bi-cart3"></i>;
-  const clicked = <i class="bi bi-check-lg"></i>;
-
-  const [addProduct, setAddProduct] = useState(false);
-  const handleChangeActive = () => {
-    setAddProduct((previousProduct) => {
-      return !previousProduct;
-    });
-  };
-
-  // const prop = props.type;
-
-  // const URL = "http://localhost:3001/${props.type}"
+  const [changeIconOnClick, changeIconOnClickFun] = useState();
+  const product = productName;
 
   useEffect(() => {
     Axios.get(`http://localhost:3001/${props.type}`).then((response) => {
@@ -30,14 +18,44 @@ function Movies(props) {
     });
   }, [props.type]);
 
-  // const movies = useSelector(selectMovies);
-  // console.log("movies:", movies);
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (!loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      history.push("/login");
+    }
+  }, [localStorage]);
+
+  console.log("this is the culprit", productName);
+
+  const [addProduct, setAddProduct] = useState(false);
+  const handleChangeActive = (pid, price) => {
+    changeIconOnClickFun(pid);
+    console.log("handle change============================", pid);
+    console.log("handle change===========================prices=", price);
+    Axios.post("http://localhost:3001/api/addToCart", {
+      BID: "11",
+      CID: JSON.stringify(userData.CID),
+      // PID: JSON.stringify(productName.PID),
+      PID: pid,
+      Quantity: "1",
+      PriceSold: price,
+      // PriceSold: JSON.stringify(productName.PPrice),
+    }).then((response) => {
+      console.log("this is added product details", response);
+    });
+
+    setAddProduct((previousProduct) => {
+      return !previousProduct;
+    });
+  };
 
   return (
     <div className="movies__container">
       <div className="movies__section">
         <div className="movies__content">
           {productName.map((val, index) => {
+            console.log("inside map............", val.PID);
             return (
               <>
                 <div>
@@ -53,6 +71,7 @@ function Movies(props) {
                       justifyContent: "space-between",
                     }}
                   >
+                    <h6 style={{ color: "white" }}>{userData.FNAME}</h6>
                     <h6 style={{ color: "whitesmoke" }} key={index}>
                       {val.PName}
                     </h6>
@@ -61,17 +80,19 @@ function Movies(props) {
                       // to="/cart"
                       className="cart__btn"
                     >
-                      {addProduct ? (
+                      {/* {addProduct ? (
                         <i
                           class="bi bi-check-lg"
-                          onClick={() => handleChangeActive()}
+                          onClick={() =>
+                            handleChangeActive(val.PID, val.PPrice)
+                          }
                         ></i>
-                      ) : (
-                        <i
-                          class="bi bi-cart3"
-                          onClick={() => handleChangeActive()}
-                        ></i>
-                      )}
+                      ) : ( */}
+                      <i
+                         class={changeIconOnClick === val.PID ? "bi bi-check-lg" : "bi bi-cart3"}
+                        onClick={() => handleChangeActive(val.PID, val.PPrice)}
+                      ></i>
+                      {/* )} */}
                       {/* <i class="bi bi-cart3"></i>
                       <i class="bi bi-check-lg"></i> */}
                     </Link>

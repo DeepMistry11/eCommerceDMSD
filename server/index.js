@@ -128,6 +128,7 @@ app.get("/api/viewAll", (req, res) => {
 app.post("/api/addToCart", (req, res) => {
   console.log("in add to cart api");
   const BID = req.body.BID;
+  const CID = req.body.CID;
   const PID = req.body.PID;
   const Quantity = req.body.Quantity;
   const PriceSold = req.body.PriceSold;
@@ -135,7 +136,7 @@ app.post("/api/addToCart", (req, res) => {
   console.log(req.body);
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO userDetailAfterLogin(CID) VALUES ('?')",
+    "INSERT INTO userDetailAfterLogin(CID) VALUES (?)",
     [CID],
     (err, result) => {
       console.log(err, "something is wrong in userDetailAfterLogin ");
@@ -143,7 +144,7 @@ app.post("/api/addToCart", (req, res) => {
   );
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO basket(CID,BID) VALUES ('?','?')",
+    "INSERT INTO basket(CID,BID) VALUES (?,?)",
     [CID, BID],
     (err, result) => {
       console.log(err, "something is wrong basket");
@@ -151,7 +152,7 @@ app.post("/api/addToCart", (req, res) => {
   );
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO appears_in(BID,PID,Quantity,PriceSold) VALUES ('?','?','?','?')",
+    "INSERT INTO appears_in(BID,PID,Quantity,PriceSold) VALUES (?,?,?,?)",
     [BID, PID, Quantity, PriceSold],
     (err, result) => {
       console.log(err, "something is wrong appears_in");
@@ -160,25 +161,20 @@ app.post("/api/addToCart", (req, res) => {
   res.send("Product added to cart");
 });
 
-// app.post("/api/displayCart", (req, res) => {
-//   console.log('in displayCart')
-//   const CID = req.body.CID;
+app.post("/api/displayCart", (req, res) => {
+  console.log("in displayCart");
 
-//   console.log('req.body in add to cart')
-//   console.log(req.body)
-//   const sqlQuery = "SELECT PName, PType, description, Quantity, PriceSold FROM cart NATURAL JOIN product WHERE cart.PID=product.PID AND cart.CID=?";
-//   db.query(
-//    sqlQuery,
+  const sqlQuery =
+    "SELECT PName, PType, description, Quantity, PriceSold FROM cart NATURAL JOIN product NATURAL JOIN userDetailAfterLogin WHERE cart.PID=product.PID AND cart.CID=userDetailAfterLogin.CID;";
+  db.query(
+    sqlQuery,
 
-//     [CID],
-//     (err, result) => {
-//       console.log(err, "something is wrong");
-//       res.send("Cart Details",result);
-//     }
-
-//   );
-
-// });
+    (err, result) => {
+      console.log(err, "something is wrong");
+      res.send("Cart Details", result);
+    }
+  );
+});
 
 ///////////////////////////////     ONLINE SALES           /////////////////////////////////////////////
 
