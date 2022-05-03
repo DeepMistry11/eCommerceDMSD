@@ -81,7 +81,17 @@ function Header2() {
       <div className="header__sidebar">
         <div className="header__sidebar__logo" style={{ marginLeft: "2%" }}>
           <NavLink to="/home" className="header__sidebar__logo">
-            <img alt="xyz" src="/images/logo.svg" />
+            {/* <img alt="xyz" src="/images/logo.svg" /> */}
+            <p
+              style={{
+                fontSize: "25px",
+                color: "white",
+                textDecoration: "none",
+                marginTop: "8px",
+              }}
+            >
+              AMD
+            </p>
           </NavLink>
         </div>
         {/* {!userName ? (

@@ -13,14 +13,14 @@ function Originals() {
               <div className="movies__wrap">
                 <img
                   alt="img"
-                  src="https://dordtdiamond.files.wordpress.com/2021/03/last-dragon-review3.jpg"
+                  src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZGVza3RvcCUyMGNvbXB1dGVyfGVufDB8fDB8fA%3D%3D&w=1000&q=80"
                 />
               </div>
             </Link>
             <div className="movies__wrap">
               <img
                 alt="img"
-                src="https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fblogs-images.forbes.com%2Fscottmendelson%2Ffiles%2F2018%2F06%2Fbanner-1200x674.jpg"
+                src="https://cdn.mos.cms.futurecdn.net/Ks6KtG9fx9soz6ddidT9iY-1200-80.jpg"
               />
             </div>
           </div>

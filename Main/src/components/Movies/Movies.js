@@ -29,12 +29,17 @@ function Movies(props) {
   console.log("this is the culprit", productName);
 
   const [addProduct, setAddProduct] = useState(false);
+
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
   const handleChangeActive = (pid, price) => {
     changeIconOnClickFun(pid);
     console.log("handle change============================", pid);
     console.log("handle change===========================prices=", price);
     Axios.post("http://localhost:3001/api/addToCart", {
-      BID: "11",
+      BID: getRandomInt(100),
       CID: JSON.stringify(userData.CID),
       // PID: JSON.stringify(productName.PID),
       PID: pid,
@@ -63,7 +68,7 @@ function Movies(props) {
                     className="movies__wrap"
                     style={{ marginBottom: "10px" }}
                   >
-                    <img src="https://m.media-amazon.com/images/M/MV5BYWRhZjUyZTktZjcyMi00MjRhLWI0ZjQtNjkxYjlmYjg4N2M0XkEyXkFqcGdeQXZ3ZXNsZXk@._V1_QL75_UX500_CR0,0,500,281_.jpg" />
+                    <img src="https://s.yimg.com/os/creatr-uploaded-images/2020-11/c8aea820-28a0-11eb-9f89-5ddd62987703" />
                   </div>
                   <div
                     style={{
@@ -71,7 +76,7 @@ function Movies(props) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <h6 style={{ color: "white" }}>{userData.FNAME}</h6>
+                    {/* <h6 style={{ color: "white" }}>{userData.FNAME}</h6> */}
                     <h6 style={{ color: "whitesmoke" }} key={index}>
                       {val.PName}
                     </h6>
@@ -89,7 +94,11 @@ function Movies(props) {
                         ></i>
                       ) : ( */}
                       <i
-                         class={changeIconOnClick === val.PID ? "bi bi-check-lg" : "bi bi-cart3"}
+                        class={
+                          changeIconOnClick === val.PID
+                            ? "bi bi-check-lg"
+                            : "bi bi-cart3"
+                        }
                         onClick={() => handleChangeActive(val.PID, val.PPrice)}
                       ></i>
                       {/* )} */}

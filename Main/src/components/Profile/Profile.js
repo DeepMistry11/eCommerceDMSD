@@ -1,13 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import "./profile.css";
+import { useHistory } from "react-router-dom";
 
 function Profile() {
+  const history = useHistory();
+  const userData = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (!loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      history.push("/login");
+    }
+  }, [localStorage]);
+
   const [customer, setCustomer] = useState([]);
   useEffect(() => {
-    Axios.get("http://localhost:3001/profile").then((response) => {
+    Axios.get("http://localhost:3001/orders").then((response) => {
       setCustomer(response.data);
-      console.log(response.data);
+      console.log("this is transaction history", customer);
     });
   }, []);
   return (
@@ -24,7 +35,7 @@ function Profile() {
             <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                  {/* {customer[2].Email} */}
+                  {/* {customer[2].Email} */}4 kingsland ave
                 </p>
               </div>
               <svg
@@ -44,6 +55,7 @@ function Profile() {
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
                   {/* {customer[2].Password} */}
+                  deepmistry753@gmail.com
                 </p>
               </div>
               <svg
@@ -63,6 +75,7 @@ function Profile() {
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
                   {/* {customer[2].Address} */}
+                  deep
                 </p>
               </div>
               <svg
@@ -117,7 +130,14 @@ function Profile() {
             <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                  deepmistry753@gmail.com
+                  {/* {customer.CCNumber} */}
+                  1111111111111111
+                </p>
+                <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
+                  Quantity: 1
+                </p>
+                <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
+                  Delivered
                 </p>
               </div>
               <div></div>
@@ -127,12 +147,37 @@ function Profile() {
             <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                  deepmistry753@gmail.com
+                  {/* {customer.CCNumber} */}
+                  8888888888888888
+                </p>
+                <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
+                  Quantity: 1
+                </p>
+                <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
+                  Delivered
                 </p>
               </div>
+              <div></div>
             </div>
           </div>
           <div className="prof__pass">
+            <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
+              <div class="sc-fNHLbd enGimF">
+                <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
+                  {/* {customer.CCNumber} */}
+                  1523645897451265
+                </p>
+                <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
+                  Quantity: 1
+                </p>
+                <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
+                  Delivered
+                </p>
+              </div>
+              <div></div>
+            </div>
+          </div>
+          {/* <div className="prof__pass">
             <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
               <div class="sc-fNHLbd enGimF">
                 <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
@@ -140,16 +185,7 @@ function Profile() {
                 </p>
               </div>
             </div>
-          </div>
-          <div className="prof__pass">
-            <div class="sc-ciodno sc-ccbnFN cxDKXM sc-hSmEHG cChrsE cell">
-              <div class="sc-fNHLbd enGimF">
-                <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                  deepmistry753@gmail.com
-                </p>
-              </div>
-            </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

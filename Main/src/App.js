@@ -20,6 +20,7 @@ import ViewerComputer from "./components/Viewers/ViewerComputer";
 import ViewerAcc from "./components/Viewers/ViewerAcc";
 import ViewerPrinter from "./components/Viewers/ViewerPrinter";
 import Stats from "./components/Stats/Stats";
+import Transaction from "./components/Transaction/Transaction";
 
 function App() {
   const location = useLocation();
@@ -70,6 +71,9 @@ function App() {
             </Route>
             <Route path="/originals">
               <Originals />
+            </Route>
+            <Route path="/transactions">
+              <Transaction />
             </Route>
             <Route path="/">
               <Home />

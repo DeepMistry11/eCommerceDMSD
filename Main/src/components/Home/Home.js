@@ -101,7 +101,7 @@ function Home() {
                     style={{ padding: "0px" }}
                   >
                     <img
-                      src="https://cdn.mos.cms.futurecdn.net/3tQfZWCFCLVbkQ5ZyaPaTc.jpg"
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDaRm1itz1U9toa5osK5Os9QmAv7pOfQ-_lz56ZAR4N4IH3aaEndAxz1l-lsvBtEvFDqg&usqp=CAU"
                       alt="logo"
                       style={{ width: "-webkit-fill-available" }}
                     />
@@ -137,7 +137,7 @@ function Home() {
                     style={{ padding: "0px" }}
                   >
                     <img
-                      src="https://cdn.mos.cms.futurecdn.net/3tQfZWCFCLVbkQ5ZyaPaTc.jpg"
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-tIfMT9nMXo3gltRCky_ZIqCIoH0VJ1JDnw&usqp=CAU"
                       alt="logo"
                       style={{ width: "-webkit-fill-available" }}
                     />
@@ -164,7 +164,7 @@ function Home() {
               >
                 <div className="prof__head">
                   <p class="body-copy margin--0 truncate text-color--section-header">
-                    Printers
+                    Accessories
                   </p>
                 </div>
                 <div className="prof__mail">
@@ -173,7 +173,7 @@ function Home() {
                     style={{ padding: "0px" }}
                   >
                     <img
-                      src="https://cdn.mos.cms.futurecdn.net/3tQfZWCFCLVbkQ5ZyaPaTc.jpg"
+                      src="https://cdn.thewirecutter.com/wp-content/media/2022/04/gaming-mouse-2048px-4725-2x1-1.jpg?auto=webp&quality=60&crop=2:1&width=1024"
                       alt="logo"
                       style={{ width: "-webkit-fill-available" }}
                     />
@@ -187,7 +187,7 @@ function Home() {
                       style={{ textDecoration: "none" }}
                     >
                       <p class="body-copy margin--0 body-copy--heavy truncate text-color--primary">
-                        Shop Printers
+                        Shop Accessories
                       </p>
                     </Link>
                   </div>
