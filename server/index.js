@@ -135,10 +135,26 @@ app.post("/api/addToCart", (req, res) => {
   console.log(req.body);
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "INSERT INTO userDetailAfterLogin(CID) VALUES ('?')",
+    [CID],
+    (err, result) => {
+      console.log(err, "something is wrong in userDetailAfterLogin ");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "INSERT INTO basket(CID,BID) VALUES ('?','?')",
+    [CID, BID],
+    (err, result) => {
+      console.log(err, "something is wrong basket");
+    }
+  );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
     "INSERT INTO appears_in(BID,PID,Quantity,PriceSold) VALUES ('?','?','?','?')",
     [BID, PID, Quantity, PriceSold],
     (err, result) => {
-      console.log(err, "something is wrong");
+      console.log(err, "something is wrong appears_in");
     }
   );
   res.send("Product added to cart");
