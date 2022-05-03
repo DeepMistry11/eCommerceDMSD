@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   CAvatar,
@@ -46,6 +46,12 @@ import {
   cilUserFemale,
 } from "@coreui/icons";
 
+// import { DateRangePicker } from "rsuite";
+import "rsuite/styles/index.less"; // or 'rsuite/dist/rsuite.min.css'
+import { Calendar } from "react-date-range";
+import { DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
+
 import avatar1 from "./1.jpg";
 import avatar2 from "./2.jpg";
 import avatar3 from "./3.jpg";
@@ -57,6 +63,16 @@ import avatar6 from "./6.jpg";
 // import WidgetsDropdown from "../widgets/WidgetsDropdown";
 
 const Stats = () => {
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: "selection",
+    },
+  ]);
+
+  const date = JSON.stringify(state);
+
   const random = (min, max) =>
     Math.floor(Math.random() * (max - min + 1) + min);
 
@@ -191,12 +207,18 @@ const Stats = () => {
     },
   ];
 
+  const selectionRange = {
+    startDate: new Date(),
+    endDate: new Date(),
+    key: "selection",
+  };
+
   return (
     <>
       {/* <WidgetsDropdown /> */}
       {/* <WidgetsBrand withCharts /> */}
 
-      <CRow>
+      <CRow style={{ width: "65%", marginLeft: "auto", marginRight: "auto" }}>
         <CCol xs>
           <CCard className="mb-4">
             <CCardHeader>Traffic {" & "} Sales</CCardHeader>
@@ -223,19 +245,6 @@ const Stats = () => {
                   </CRow>
 
                   <hr className="mt-0" />
-                  {progressGroupExample1.map((item, index) => (
-                    <div className="progress-group mb-4" key={index}>
-                      <div className="progress-group-prepend">
-                        <span className="text-medium-emphasis small">
-                          {item.title}
-                        </span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="info" value={item.value1} />
-                        <CProgress thin color="danger" value={item.value2} />
-                      </div>
-                    </div>
-                  ))}
                 </CCol>
 
                 <CCol xs={12} md={6} xl={6}>
@@ -260,44 +269,19 @@ const Stats = () => {
 
                   <hr className="mt-0" />
 
-                  {progressGroupExample2.map((item, index) => (
-                    <div className="progress-group mb-4" key={index}>
-                      <div className="progress-group-header">
-                        <CIcon className="me-2" icon={item.icon} size="lg" />
-                        <span>{item.title}</span>
-                        <span className="ms-auto fw-semibold">
-                          {item.value}%
-                        </span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="warning" value={item.value} />
-                      </div>
-                    </div>
-                  ))}
-
                   <div className="mb-5"></div>
-
-                  {progressGroupExample3.map((item, index) => (
-                    <div className="progress-group" key={index}>
-                      <div className="progress-group-header">
-                        <CIcon className="me-2" icon={item.icon} size="lg" />
-                        <span>{item.title}</span>
-                        <span className="ms-auto fw-semibold">
-                          {item.value}{" "}
-                          <span className="text-medium-emphasis small">
-                            ({item.percent}%)
-                          </span>
-                        </span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="success" value={item.percent} />
-                      </div>
-                    </div>
-                  ))}
                 </CCol>
               </CRow>
 
               <br />
+              <DateRange
+                editableDateInputs={true}
+                onChange={(item) => setState([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={state}
+              />
+
+              <h3>{"date.lastDate"}</h3>
 
               <CTable align="middle" className="mb-0 border" hover responsive>
                 <CTableHead color="light">
@@ -305,14 +289,11 @@ const Stats = () => {
                     <CTableHeaderCell className="text-center">
                       <CIcon icon={cilPeople} />
                     </CTableHeaderCell>
-                    <CTableHeaderCell>User</CTableHeaderCell>
+                    <CTableHeaderCell>Product ID</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">
-                      Country
+                      Product Name
                     </CTableHeaderCell>
-                    <CTableHeaderCell>Usage</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">
-                      Payment Method
-                    </CTableHeaderCell>
+                    <CTableHeaderCell>Sold Items</CTableHeaderCell>
                     <CTableHeaderCell>Activity</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
@@ -328,10 +309,6 @@ const Stats = () => {
                       </CTableDataCell>
                       <CTableDataCell>
                         <div>{item.user.name}</div>
-                        <div className="small text-medium-emphasis">
-                          <span>{item.user.new ? "New" : "Recurring"}</span> |
-                          Registered: {item.user.registered}
-                        </div>
                       </CTableDataCell>
                       <CTableDataCell className="text-center">
                         <CIcon
@@ -356,9 +333,6 @@ const Stats = () => {
                           color={item.usage.color}
                           value={item.usage.value}
                         />
-                      </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        <CIcon size="xl" icon={item.payment.icon} />
                       </CTableDataCell>
                       <CTableDataCell>
                         <div className="small text-medium-emphasis">
