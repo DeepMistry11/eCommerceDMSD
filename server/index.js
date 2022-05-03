@@ -19,16 +19,16 @@ app.use(
 app.use(express.json());
 
 const db = mysql.createConnection({
-  multipleStatements: true,
-  host: "localhost",
-  port: "3306",
-  user: "root",
-  password: "itsAsecrate11",
-  database: "online_store",
+  // multipleStatements: true,
   // host: "localhost",
+  // port: "3306",
   // user: "root",
-  // password: "password",
+  // password: "itsAsecrate11",
   // database: "online_store",
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "online_store",
 });
 
 db.connect(function (err) {
@@ -126,7 +126,8 @@ app.get("/api/viewAll", (req, res) => {
 });
 
 app.post("/api/addToCart", (req, res) => {
-  console.log("in add to cart api");
+  console.log("in add to cart api",req);
+  const CID = req.body.CID;
   const BID = req.body.BID;
   const PID = req.body.PID;
   const Quantity = req.body.Quantity;
@@ -160,42 +161,32 @@ app.post("/api/addToCart", (req, res) => {
   res.send("Product added to cart");
 });
 
-// app.post("/api/displayCart", (req, res) => {
-//   console.log('in displayCart')
-//   const CID = req.body.CID;
 
-//   console.log('req.body in add to cart')
-//   console.log(req.body)
-//   const sqlQuery = "SELECT PName, PType, description, Quantity, PriceSold FROM cart NATURAL JOIN product WHERE cart.PID=product.PID AND cart.CID=?";
-//   db.query(
-//    sqlQuery,
 
-//     [CID],
-//     (err, result) => {
-//       console.log(err, "something is wrong");
-//       res.send("Cart Details",result);
-//     }
-
-//   );
-
-// });
-
-///////////////////////////////     ONLINE SALES           /////////////////////////////////////////////
-
-app.get("/sales", (req, res) => {
-  const sqlSelect =
-    "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= '2022-01-01' AND DATE(TDATE)<= '2022-01-01' AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES; ";
-  // ["2022-01-01", "2023-01-01"],
-  // const sql2 =
-  JOIN(
-    "SELECT PID,PName,SOLD_TIMES FROM product NATURAL JOIN TEMP_TABLE1 WHERE PID=PRODUCT_SOLD_PID ORDER BY SOLD_TIMES DESC;"
+app.post("/api/sales", (req, res) => {
+ console.log('api/sales');
+  //const TTAG = req.body.TTAG;
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= '2022-01-01' AND DATE(TDATE)<= '2023-01-01' AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES",
+    // [TDATE,TDATE,TTAG],
+    ['2022-01-01','2023-01-01','Delivered'],
+    (err, result) => {
+      console.log(err, "something is wrong in 1st ");
+    }
   );
+  db.query(
+    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+    "SELECT PID,PName,SOLD_TIMES FROM product NATURAL JOIN TEMP_TABLE1 WHERE PID=PRODUCT_SOLD_PID ORDER BY SOLD_TIMES DESC",
+   
+    (err, result) => {
+      console.log(err, "something is wrong in 2nd ",result);
+      res.send(result)
+    }
+  );
+
   // const op = sqlSelect  sql2;
-  db.query(sqlSelect, (err, result) => {
-    console.log(result);
-    // return result;
-    res.send(result);
-  });
+  
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
