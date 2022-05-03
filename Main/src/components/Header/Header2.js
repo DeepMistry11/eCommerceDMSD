@@ -24,8 +24,8 @@ function Header2() {
     const loggedInUser = localStorage.getItem("user");
     if (!loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser.FNAME);
-      console.log(foundUser.Fname);
+      // setUser(foundUser.FNAME);
+      // console.log(foundUser.Fname);
       // setUser(foundUser);
       history.push("/login");
     }
