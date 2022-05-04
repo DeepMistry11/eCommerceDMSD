@@ -67,7 +67,7 @@ function Cart(props) {
                       </p>
                       <div>
                         <div className="App">
-                          <QuantityPicker />
+                          <QuantityPicker value={1} />
                         </div>
                       </div>
                     </div>

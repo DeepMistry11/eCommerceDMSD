@@ -49,7 +49,7 @@ app.post("/register", (req, res) => {
   console.log(req.body);
   db.query(
     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (30,?,?,?,?,?,?)",
+    "INSERT INTO customer(CID, FNAME, LNAME, Email, Address, Phone, Password) VALUES (40,?,?,?,?,?,?)",
     [fname, lname, email, address, phone, password],
     (err, result) => {
       console.log(err, "something is wrong");
@@ -174,28 +174,28 @@ app.get("/api/displayCart", (req, res) => {
 
 ///////////////////////////////     ONLINE SALES           /////////////////////////////////////////////
 
-app.post("/api/sales", (req, res) => {
-  console.log("api/sales");
-  //const TTAG = req.body.TTAG;
-  db.query(
-    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= '2022-01-01' AND DATE(TDATE)<= '2023-01-01' AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES",
-    // [TDATE,TDATE,TTAG],
-    ["2022-01-01", "2023-01-01", "Delivered"],
-    (err, result) => {
-      console.log(err, "something is wrong in 1st ");
-    }
-  );
-  db.query(
-    // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
-    "SELECT PID,PName,SOLD_TIMES FROM product NATURAL JOIN TEMP_TABLE1 WHERE PID=PRODUCT_SOLD_PID ORDER BY SOLD_TIMES DESC",
+// app.post("/api/sales", (req, res) => {
+//   console.log("api/sales");
+//   //const TTAG = req.body.TTAG;
+//   db.query(
+//     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+//     "CREATE TABLE TEMP_TABLE1 AS SELECT SUM(Quantity) AS SOLD_TIMES, PID AS PRODUCT_SOLD_PID FROM appears_in NATURAL JOIN transactions WHERE DATE(TDATE)>= '2022-01-01' AND DATE(TDATE)<= '2023-01-01' AND TTag='Delivered' GROUP BY PID ORDER BY SOLD_TIMES",
+//     // [TDATE,TDATE,TTAG],
+//     ["2022-01-01", "2023-01-01", "Delivered"],
+//     (err, result) => {
+//       console.log(err, "something is wrong in 1st ");
+//     }
+//   );
+//   db.query(
+//     // "IF (NOT EXISTS SELECT * FROM users WHERE email = ?, INSERT INTO users(email, password) VALUES (?,?))",
+//     "SELECT PID,PName,SOLD_TIMES FROM product NATURAL JOIN TEMP_TABLE1 WHERE PID=PRODUCT_SOLD_PID ORDER BY SOLD_TIMES DESC",
 
-    (err, result) => {
-      console.log(err, "something is wrong in 2nd ", result);
-      res.send(result);
-    }
-  );
-});
+//     (err, result) => {
+//       console.log(err, "something is wrong in 2nd ", result);
+//       res.send(result);
+//     }
+//   );
+// });
 
 app.post("/card", (req, res) => {
   const cnum = req.body.cnum;
@@ -300,7 +300,7 @@ app.post("/orders", (req, res) => {
       console.log(result[1].BID);
       db.query(
         "INSERT INTO transactions(BID, CCNumber, CID, SAName, TDate, TTag) VALUES (?, ?, ?, ?, '2022-05-03', 'Delivered') ",
-        [result[1].BID, cnum, cid, sname, "2022-05-03", "Delivered"],
+        [result[0].BID, cnum, cid, sname, "2022-05-03", "Delivered"],
         // [result[1], cnum, cid, sname, "2022-05-03", "Delivered"],
         // [result[2], cnum, cid, sname, "2022-05-03", "Delivered"],
         (err, result) => {
